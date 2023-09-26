@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function PaymentPage() {
-    const [payments, setPayments] = useState([])
+    /*const [payments, setPayments] = useState([])
     const [transactions, setTransactions] = useState([])
-    /*const [car_license, setLicense] = useState("")
-    const [car_province, setProvince] = useState("")
-    const [payment_type, setType] = useState("")*/
+    */
+   
     const [state, setState] = useState({
         car_license: "",
         car_province: "",
