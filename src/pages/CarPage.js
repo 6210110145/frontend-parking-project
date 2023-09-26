@@ -24,29 +24,29 @@ function CarPage() {
   
   return (
       <div className='first-page'>
-          <div className='mt-5'>
-            <input 
-              type='text'
-              placeholder='license'
-              onChange={e => setLicense(e.target.value)}
-            />
-            <button type='button' onClick={fetchPayment}>
-              Search 
-            </button>
-            <div>
-              <a href='\payment' role="button"> go to payment </a>
-            </div>
-            
-            {Object.keys(payments).map((payment) => (
-            <div key={payment.payment_id}>
-              <div>{payment}: {payments[payment]} </div>
-              
-            </div>
-            ))}   
-                     
+        <div className='mt-5'>
+          <input 
+            type='text'
+            placeholder='license'
+            onChange={e => setLicense(e.target.value)}
+          />
+          <button type='button' onClick={fetchPayment}>
+            Search 
+          </button>
+          <div>
+            <a href='\payment' role="button"> go to payment </a>
           </div>
-      </div>
-    )
+
+          return(
+            {Object.keys(payments).map((payment) => (
+              <div key={payment.payment_id}>
+                <div>{payment}: {payments[payment]} </div> 
+              </div>
+            ))} 
+          )        
+        </div>
+    </div>
+  )
 }
 
 export default CarPage;

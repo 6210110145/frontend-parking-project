@@ -75,7 +75,7 @@ function PaymentPage() {
                         Type: <input value={state.payment_type} type='text' name="payment_type" onChange={handleChange}/>
                     </label>
                     
-                    <button type='submit'> Submit </button>
+                    <button type='submit'> pay </button>
                 </form>
 
             </div>
