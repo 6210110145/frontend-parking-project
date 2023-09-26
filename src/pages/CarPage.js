@@ -33,13 +33,17 @@ function CarPage() {
             <button type='button' onClick={fetchPayment}>
               Search 
             </button>
+            <div>
+              <a href='\payment' role="button"> go to payment </a>
+            </div>
             
             {Object.keys(payments).map((payment) => (
             <div key={payment.payment_id}>
               <div>{payment}: {payments[payment]} </div>
+              
             </div>
             ))}   
-            <a href='\payment' role="button" className="btn btn-primary btn-lg"> go to payment </a>         
+                     
           </div>
       </div>
     )
