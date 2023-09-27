@@ -2,79 +2,67 @@ import '../App.css';
 import '../styles/Page.css'
 import React, { useState } from 'react';
 import axios from 'axios'
+import { Button, Container, Form, Nav, Navbar } from 'react-bootstrap';
 
 function CarPage() {
-    const [payments, setPayments] = useState([])
-    const [license, setLicense] = useState("")
+  const [payments, setPayments] = useState([])
+  const [license, setLicense] = useState("")
 
-    const fetchPayment = () => {
-      axios.get(`http://localhost:3001/payments/${license}`)
+  const fetchPayment = () => {
+    axios.get(`http://localhost:3001/payments/${license}`)
       .then((res) => {
         console.log(res.data)
         setPayments(res.data)
       })
       .catch((err) => {
         console.log(err);
-     });
-    }
-    
-    /*useEffect(() => {
-      fetchPayment()
-    }, [])*/
+      });
+  }
   
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <span class="navbar-brand mb-0 h1">หน้าหลัก</span>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <Navbar expand="lg" className="bg-body-tertiary">
+      <Container fluid>
+        <Navbar.Brand > หน้าหลัก </Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav
+            className="me-auto my-2 my-lg-0"
+            style={{ maxHeight: '100px' }}
+            navbarScroll
+          >
+            <Nav.Link href="\">Home</Nav.Link>
+            <Nav.Link href="\payment">Payment</Nav.Link> 
+          </Nav>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/"> Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/payment"> payment </a>
-            </li>
-          </ul>
-
-          <form class="form-inline my-2 my-lg-0">
+          <Form className="d-flex">
             <input 
               type='text'
               placeholder='license'
+              className="me-2"
               onChange={e => setLicense(e.target.value)}
             />
-            <button type='button' onClick={fetchPayment}>
+            <Button variant="outline-success" onClick={fetchPayment}>
               Search 
-            </button>
-          </form>
-        </div>
-      </nav>
+            </Button>
+          </Form>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
 
     <div className='first-page'>
       <div class='mt-5'>
         <div className="jumbotron">
-              
-            <input 
-              type='text'
-              placeholder='license'
-              onChange={e => setLicense(e.target.value)}
-            />
-            <button type='button' onClick={fetchPayment}>
-              Search 
-            </button>
-            <div>
-              <a href='\payment' role="button"> go to payment </a>
-            </div>
-
+        
+          
+        {Object.keys(payments).map((payment) => (
+          <div key={payment.payment_id}>
+            <div>{payment}: {payments[payment]} </div> 
           </div>
-            {Object.keys(payments).map((payment) => (
-              <div key={payment.payment_id}>
-                <div>{payment}: {payments[payment]} </div> 
-              </div>
-            ))}        
+        ))}
+        
+        <Button href='\payment'> go to payment </Button>
+        </div>        
       </div>
     </div>
     </div>
