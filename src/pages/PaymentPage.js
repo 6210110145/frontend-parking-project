@@ -23,18 +23,6 @@ function PaymentPage() {
         })
     }
     /*
-    useEffect(() => {
-        const fetchTransaction = () => {
-            const result = axios.get(`http://localhost:3001/transactions/${license}`)
-            
-            setTransactions({
-                posts: result.data
-            })
-        }
-        fetchTransaction()  
-    }, [license]);
-    */
-    /*
     const fetchPayment = () => {
         axios.get(`http://localhost:3001/payments/pay/${state.car_license}`)
         .then((res) => {
@@ -71,7 +59,7 @@ function PaymentPage() {
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                 >
-                    <Nav.Link href="\">Home</Nav.Link>
+                    <Nav.Link href="\home">Home</Nav.Link>
                     <Nav.Link href="\payment">Payment</Nav.Link> 
                 </Nav>
 
@@ -91,25 +79,31 @@ function PaymentPage() {
         </Navbar>
         <div className='first-page'>
             <div className='mt-5'>
-                <h1>Payment Page</h1>
+                <div className="jumbotron">
 
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor='car_license'>
-                        License: <input value={state.car_license} type='text' name="car_license" onChange={handleChange}/>
-                    </label>
-                    <label htmlFor='car_province'>
-                        Province: <input value={state.car_province} type='text' name="car_province" onChange={handleChange}/>
-                    </label>
-                    <label htmlFor='payment_type'>
-                        Type: <input value={state.payment_type} type='text' name="payment_type" onChange={handleChange}/>
-                    </label>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group>
+                        <Form.Label htmlFor='car_license'>
+                            License: <input value={state.car_license} type='text' name="car_license" onChange={handleChange}/>
+                        </Form.Label>
+                    </Form.Group>
+                    <Form.Group>                    
+                        <Form.Label htmlFor='car_province'>
+                            Province: <input value={state.car_province} type='text' name="car_province" onChange={handleChange}/>
+                        </Form.Label>
+                    </Form.Group>
+                        <Form.Group>
+                        <Form.Label htmlFor='payment_type'>
+                            Type: <input value={state.payment_type} type='text' name="payment_type" onChange={handleChange}/>
+                        </Form.Label>
+                    </Form.Group>
                     
-                    <button type='submit'> pay </button>
-                </form>
-
+                    <Button type='submit'> pay </Button>{' '}
+                </Form>
+                </div>
             </div>
         </div>
-        </div>
+    </div>
     )
 }
 export default PaymentPage;

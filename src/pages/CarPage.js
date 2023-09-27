@@ -20,7 +20,7 @@ function CarPage() {
   }
   
   return (
-    <div>
+    <>
       <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <Navbar.Brand > หน้าหลัก </Navbar.Brand>
@@ -31,7 +31,7 @@ function CarPage() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="\">Home</Nav.Link>
+            <Nav.Link href="\home">Home</Nav.Link>
             <Nav.Link href="\payment">Payment</Nav.Link> 
           </Nav>
 
@@ -52,20 +52,17 @@ function CarPage() {
 
     <div className='first-page'>
       <div class='mt-5'>
-        <div className="jumbotron">
-        
-          
+        <div className="jumbotron">  
         {Object.keys(payments).map((payment) => (
           <div key={payment.payment_id}>
             <div>{payment}: {payments[payment]} </div> 
           </div>
         ))}
-        
         <Button href='\payment'> go to payment </Button>
         </div>        
       </div>
     </div>
-    </div>
+    </>
   )
 }
 
