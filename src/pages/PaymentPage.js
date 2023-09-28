@@ -2,7 +2,7 @@ import '../App.css';
 import '../styles/Page.css'
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Container, Form, Nav, Navbar } from 'react-bootstrap';
+import { Button, Card, Container, Form, Nav, Navbar } from 'react-bootstrap';
 
 function PaymentPage() {
     /*const [payments, setPayments] = useState([])
@@ -79,9 +79,22 @@ function PaymentPage() {
         </Navbar>
         <div className='first-page'>
             <div className='mt-5'>
-                <div className="jumbotron">
+                
+                
+                <Card className='text-center'>
+                    <Card.Header>
+                        <Card.Title > เลขป้ายทะเบียนป้าย </Card.Title>
+                        <Card.Subtitle className="mb-2"> จังหวัด </Card.Subtitle>
+                    </Card.Header>
+                    <Card.Body>
+                        <Card.Text> เวลาจอด </Card.Text>
+                        <Card.Text> จำนวนเงิน </Card.Text>
+                    </Card.Body>
+                </Card>
 
-                <Form onSubmit={handleSubmit}>
+                <div className='jumbotron mt-3'>
+                <Form onSubmit={handleSubmit} className='mt-3'>
+                    <h3> ช่องทางการจ่าย </h3>
                     <Form.Group>
                         <Form.Label htmlFor='car_license'>
                             License: <input value={state.car_license} type='text' name="car_license" onChange={handleChange}/>
@@ -97,13 +110,17 @@ function PaymentPage() {
                             Type: <input value={state.payment_type} type='text' name="payment_type" onChange={handleChange}/>
                         </Form.Label>
                     </Form.Group>
+
+                    <div class='text-center'>
+                        <Button className='mt-3' type='submit'> pay </Button>{' '}
+                    </div>
                     
-                    <Button type='submit'> pay </Button>{' '}
                 </Form>
+                </div>
                 </div>
             </div>
         </div>
-    </div>
+    
     )
 }
 export default PaymentPage;

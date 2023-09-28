@@ -1,12 +1,18 @@
 import '../App.css';
 import '../styles/Page.css'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
-import { Button, Container, Form, Nav, Navbar } from 'react-bootstrap';
+import { Button, Container, Form, Nav, Navbar, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function CarPage() {
   const [payments, setPayments] = useState([])
+  const [transactions, setTransactions] = useState([])
   const [license, setLicense] = useState("")
+  /*
+  useEffect(() => {
+    fetchTransaction()
+  }, [])*/
 
   const fetchPayment = () => {
     axios.get(`http://localhost:3001/payments/${license}`)
@@ -18,7 +24,18 @@ function CarPage() {
         console.log(err);
       });
   }
-  
+
+  const fetchTransaction = () => {
+    axios.get(`http://localhost:3001/transactions/${license}`)
+      .then((res) => {
+        setTransactions(res.data)
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -34,34 +51,63 @@ function CarPage() {
             <Nav.Link href="\home">Home</Nav.Link>
             <Nav.Link href="\payment">Payment</Nav.Link> 
           </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
 
-          <Form className="d-flex">
+    <div className='first-page'>
+      <div class='mt-3 text-center'>
+        <Form className="d-flex mt-3 mb-3 ">
             <input 
               type='text'
               placeholder='license'
               className="me-2"
               onChange={e => setLicense(e.target.value)}
             />
-            <Button variant="outline-success" onClick={fetchPayment}>
+            <Button 
+              variant="success" 
+              onClick={() => {
+                  fetchPayment();
+                  fetchTransaction();}}
+            >
               Search 
             </Button>
           </Form>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>License</th>
+              <th>Province</th>
+              <th>Parking</th>
+              <th>TimeIn</th>
+              <th>TimeFree</th>
+              <th>TimeTotal</th>
+              <th>CostTotal</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <tr>
+              {Object.keys(payments).map((payment) => (
+              <td> {payments[payment]} </td> ))} 
+            </tr> 
+          </tbody>
+      
+        </Table>
 
-    <div className='first-page'>
-      <div class='mt-5'>
-        <div className="jumbotron">  
-        {Object.keys(payments).map((payment) => (
-          <div key={payment.payment_id}>
-            <div>{payment}: {payments[payment]} </div> 
+        {Object.values(transactions).slice(0, 1).map((transaction) => (
+          <div class='mt-3'>
+          <h5>{transactions.car_license}</h5>
+          <h5>{transactions.transaction_id}</h5>
+          <Link to={`/payment/${transactions.transaction_id}`}> Link </Link>
           </div>
         ))}
-        <Button href='\payment'> go to payment </Button>
+  
+        <Button class="btn btn-primary float-end" href='\payment'> go to payment </Button>
+        
         </div>        
       </div>
-    </div>
     </>
   )
 }

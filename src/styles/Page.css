@@ -2,7 +2,6 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .label {
@@ -18,7 +17,7 @@
     padding-right: 60px;
     margin-bottom: 30px;
     padding-bottom: 30px;
-    padding-top: 30px;
+    padding-top: 10px;
     display: flex;
     width: 100%;
     max-width: 60%;

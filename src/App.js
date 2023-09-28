@@ -5,6 +5,7 @@ import React from 'react';
 import CarPage from './pages/CarPage';
 import PaymentPage from './pages/PaymentPage';
 import LoginPage from './pages/LoginPage';
+import Transaction from './pages/Transaction';
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route>
-            <Route path='/' exact element={<LoginPage />} />
-            <Route path='/home' element={<CarPage />} />
-            <Route path='/payment' element={<PaymentPage />}/>
+            <Route path='/'  element={<LoginPage />} />
+            <Route exact path='/home' element={<CarPage />} />
+            <Route path='/transaction/:license' element={<Transaction />} />
+            <Route exact path='/payment/:id' element={<PaymentPage />}/>
           </Route>
         </Routes>
       </BrowserRouter>
