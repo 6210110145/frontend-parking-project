@@ -96,13 +96,16 @@ function CarPage() {
       
         </Table>
 
-        {Object.values(transactions).slice(0, 1).map((transaction) => (
-          <div class='mt-3'>
-          <h5>{transactions.car_license}</h5>
-          <h5>{transactions.transaction_id}</h5>
-          <Link to={`/payment/${transactions.transaction_id}`}> Link </Link>
-          </div>
-        ))}
+        {Object.values(transactions).slice(0,1).map((transaction) => {
+          return(
+          <>
+            <h5>{transactions.car_license}</h5>
+            <h5>{transactions.transaction_id}</h5>
+            <Link to={`/payment/${transactions.transaction_id}`}> Payment </Link>
+          </>
+          )
+          
+        })}
   
         <Button class="btn btn-primary float-end" href='\payment'> go to payment </Button>
         

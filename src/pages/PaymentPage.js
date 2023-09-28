@@ -3,12 +3,28 @@ import '../styles/Page.css'
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Card, Container, Form, Nav, Navbar } from 'react-bootstrap';
-
-function PaymentPage() {
-    /*const [payments, setPayments] = useState([])
-    const [transactions, setTransactions] = useState([])
-    */
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
    
+const PaymentPage = (props) => {
+    const [data, setData] = useState([]);
+    const { id } = useParams()
+
+    const fetchTransaction = () => {
+        axios.get(`http://localhost:3001/transactions/id/${id}`)
+        .then((res) => {
+            setData(res.data)
+            console.log(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        fetchTransaction();
+    }, []);
+    
     const [state, setState] = useState({
         car_license: "",
         car_province: "",
@@ -22,15 +38,6 @@ function PaymentPage() {
             [e.target.name]: value
         })
     }
-    /*
-    const fetchPayment = () => {
-        axios.get(`http://localhost:3001/payments/pay/${state.car_license}`)
-        .then((res) => {
-          console.log(res.data)
-          setTransactions(res.data)
-        })
-        .catch((err) => { console.log(err) });
-    }*/
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -48,7 +55,7 @@ function PaymentPage() {
     }
 
     return (
-        <div>
+    <>
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container fluid>
                 <Navbar.Brand > ชำระเงิน </Navbar.Brand>
@@ -80,18 +87,25 @@ function PaymentPage() {
         <div className='first-page'>
             <div className='mt-5'>
                 
+                {Object.values(data).slice(0,1).map((car) => {
+                    return (
+                        <Card className='text-center'>
+                        <Card.Header>
+                            <Card.Title > {data.car_license} </Card.Title>
+                            <Card.Subtitle className="mb-2"> {data.car_province} </Card.Subtitle>
+                        </Card.Header>
+                        <Card.Body>
+                            <Card.Text> เวลาจอด: {data.time_total} นาที </Card.Text>
+                            {Object.values(data.payments).slice(0,1).map((pay) => {
+                                return(
+                                    <Card.Text> จำนวนเงิน: {pay.payment_total} บาท</Card.Text>
+                                )
+                            })}                            
+                        </Card.Body>
+                        </Card>
+                    )   
+                })}
                 
-                <Card className='text-center'>
-                    <Card.Header>
-                        <Card.Title > เลขป้ายทะเบียนป้าย </Card.Title>
-                        <Card.Subtitle className="mb-2"> จังหวัด </Card.Subtitle>
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Text> เวลาจอด </Card.Text>
-                        <Card.Text> จำนวนเงิน </Card.Text>
-                    </Card.Body>
-                </Card>
-
                 <div className='jumbotron mt-3'>
                 <Form onSubmit={handleSubmit} className='mt-3'>
                     <h3> ช่องทางการจ่าย </h3>
@@ -117,10 +131,10 @@ function PaymentPage() {
                     
                 </Form>
                 </div>
-                </div>
             </div>
         </div>
-    
+    </>
     )
 }
+
 export default PaymentPage;
