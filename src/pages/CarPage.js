@@ -1,18 +1,14 @@
 import '../App.css';
 import '../styles/Page.css'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios'
-import { Button, Container, Form, Nav, Navbar, Table } from 'react-bootstrap';
+import { Button, Card, Container, Form, ListGroup, Nav, NavLink, Navbar, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function CarPage() {
   const [payments, setPayments] = useState([])
   const [transactions, setTransactions] = useState([])
   const [license, setLicense] = useState("")
-  /*
-  useEffect(() => {
-    fetchTransaction()
-  }, [])*/
 
   const fetchPayment = () => {
     axios.get(`http://localhost:3001/payments/${license}`)
@@ -38,7 +34,7 @@ function CarPage() {
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <Navbar.Brand > หน้าหลัก </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -49,7 +45,8 @@ function CarPage() {
             navbarScroll
           >
             <Nav.Link href="\home">Home</Nav.Link>
-            <Nav.Link href="\payment">Payment</Nav.Link> 
+            <Nav.Link href="\payment">Payment</Nav.Link>
+            <Nav.Link href='\transaction'> History </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -95,19 +92,52 @@ function CarPage() {
           </tbody>
       
         </Table>
+        
+        {Object.values(payments).slice(0,1).map(() => (
+          <Card className='text-center mt-5' border="primary">
+            <Card.Header>
+              <Card.Title> {payments.license} </Card.Title>
+              <Card.Subtitle> {payments.province} </Card.Subtitle>
+            </Card.Header>
+       
+            <ListGroup variant="flush">
+              <ListGroup.Item> {payments.parking} </ListGroup.Item>
+              <ListGroup.Item> {payments.time_in} </ListGroup.Item>
+              <ListGroup.Item> {payments.time_out_free} </ListGroup.Item>
+              <ListGroup.Item> {payments.time_total} </ListGroup.Item>
+              <ListGroup.Item> {payments.cost_total} </ListGroup.Item>
+            </ListGroup>
+            <Card.Body>
+              <Card.Link>
+              <Link>
+                <Button class="btn btn-primary float-end"> go to Payment </Button> 
+              </Link>
+            </Card.Link>
 
-        {Object.values(transactions).slice(0,1).map((transaction) => {
+            <Card.Link>
+            <Link> History </Link>
+            </Card.Link>
+
+            </Card.Body>
+        </Card>
+        ))}
+        
+
+        {Object.values(transactions).slice(0,1).map(() => {
           return(
           <>
             <h5>{transactions.car_license}</h5>
             <h5>{transactions.transaction_id}</h5>
-            <Link to={`/payment/${transactions.transaction_id}`}> Payment </Link>
+            <Link to={`/payment/${transactions.transaction_id}`}>
+              <Button class="btn btn-primary float-end"> go to Payment </Button> 
+            </Link>
+            <div class='mt-3'>
+              <Link to={`/transaction/${transactions.car_license}`}> History </Link>
+            </div> 
           </>
           )
           
         })}
-  
-        <Button class="btn btn-primary float-end" href='\payment'> go to payment </Button>
         
         </div>        
       </div>

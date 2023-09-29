@@ -14,9 +14,10 @@ function App() {
         <Routes>
           <Route>
             <Route path='/'  element={<LoginPage />} />
-            <Route exact path='/home' Component={CarPage} />
-            <Route path='/transaction/:license' element={<Transaction />} />
+            <Route exact path='/home' Component={CarPage} />         
             <Route exact path='/payment/:id' Component={PaymentPage}/>
+            <Route exact path='/payment' Component={PaymentPage}/>
+            <Route exact path='/transaction/:license' Component={Transaction} />
           </Route>
         </Routes>
       </BrowserRouter>

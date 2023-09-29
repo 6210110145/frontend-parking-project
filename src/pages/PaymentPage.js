@@ -67,7 +67,8 @@ const PaymentPage = (props) => {
                     navbarScroll
                 >
                     <Nav.Link href="\home">Home</Nav.Link>
-                    <Nav.Link href="\payment">Payment</Nav.Link> 
+                    <Nav.Link href="\payment">Payment</Nav.Link>
+                    <Nav.Link href='\transaction'> History </Nav.Link> 
                 </Nav>
 
                 <Form className="d-flex">
