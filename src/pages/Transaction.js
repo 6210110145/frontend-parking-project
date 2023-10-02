@@ -1,8 +1,8 @@
 import { useState } from "react"
 import React from "react"
-import { Container, Nav, Navbar, Table } from "react-bootstrap"
+import { Button, Container, Nav, Navbar, Table } from "react-bootstrap"
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const Transaction = () => {
@@ -86,6 +86,14 @@ const Transaction = () => {
         </Table>
                 
         </div>
+            <div className="mt-3">
+            {Object.values(history).slice(0,1).map((car) => ( 
+            <Link to={`/home`}>
+                <Button variant="danger"> กลับ </Button> 
+            </Link>         
+            ))}
+            
+            </div>
         </div>
         </>
     )

@@ -2,13 +2,17 @@ import '../App.css';
 import '../styles/Page.css'
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Card, Container, Form, Nav, Navbar } from 'react-bootstrap';
+import { Button, Card, Container, Form, Nav, Navbar, Modal } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
    
 const PaymentPage = (props) => {
     const [data, setData] = useState([]);
     const { id } = useParams()
+
+    const [show, setShow] = useState(false)
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     const fetchTransaction = () => {
         axios.get(`http://localhost:3001/transactions/id/${id}`)
@@ -85,9 +89,9 @@ const PaymentPage = (props) => {
                 </Navbar.Collapse>
             </Container>
         </Navbar>
+
         <div className='first-page'>
-            <div className='mt-5'>
-                
+            <div className='mt-5'>             
                 {Object.values(data).slice(0,1).map((car) => {
                     return (
                         <Card className='text-center'>
@@ -127,9 +131,32 @@ const PaymentPage = (props) => {
                     </Form.Group>
 
                     <div class='text-center'>
-                        <Button className='mt-3' type='submit'> pay </Button>{' '}
-                    </div>
-                    
+                        <Button variant="primary" onClick={handleShow}>
+                            pay
+                        </Button>
+
+                        <Modal
+                            show={show}
+                            onHide={handleClose}
+                            backdrop="static"
+                            keyboard={false}
+                        >
+                            <Modal.Header closeButton>
+                            <Modal.Title>ยืนยันช่องทางการชำระเงิน</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                แน่ใจหรือไม่?
+                            </Modal.Body>
+                            <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                ปิด
+                            </Button>
+                            <Button variant="primary" type='submit' onClick={handleSubmit}>
+                                ยืนยัน
+                            </Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>   
                 </Form>
                 </div>
             </div>
