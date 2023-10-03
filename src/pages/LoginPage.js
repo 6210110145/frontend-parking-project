@@ -20,7 +20,7 @@ function LoginPage() {
             <Row className="login-page">
                 <Col>              
                     <div class="form-outline mb-4"> 
-                        <label class="form-label" for="license">โปรดกรอก: เลขทะเบียนรถยนต์</label>
+                        <label class="form-label" for="license">เลขทะเบียนรถยนต์</label>
                         <input 
                             type="text" 
                             id="license" 

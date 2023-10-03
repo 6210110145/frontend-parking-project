@@ -24,7 +24,7 @@ function CarPage() {
   }
 
   const fetchTransaction = () => {
-    axios.get(`http://localhost:3001/transactions/${license}`)
+    axios.get(`http://localhost:3001/transactions/payment/${license}`)
       .then((res) => {
         setTransactions(res.data)
         console.log(res.data)
@@ -51,9 +51,9 @@ function CarPage() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href={`/home/${transactions.car_license}`}>Home</Nav.Link>
-            <Nav.Link href={`/payment/${transactions.transaction_id}`}>Payment</Nav.Link>
-            <Nav.Link href={`/transaction/${transactions.car_license}`}> History </Nav.Link>
+            <Nav.Link to={`/home/${license}`}>Home</Nav.Link>
+            <Nav.Link href={`/payment/${license}`}>Payment</Nav.Link>
+            <Nav.Link href={`/transaction/${license}`}> History </Nav.Link>     
           </Nav>
 
           <Form className="d-flex">
@@ -77,7 +77,7 @@ function CarPage() {
             Update
           </Button>
         </Form>
-        
+
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -117,7 +117,7 @@ function CarPage() {
             </ListGroup>
             <Card.Body>
               <Card.Link>
-              <Link to={`/payment/${transactions.transaction_id}`}>
+              <Link to={`/payment/${transactions.car_license}`}>
                 <Button class="btn btn-primary float-end"> go to Payment </Button> 
               </Link>
             </Card.Link>

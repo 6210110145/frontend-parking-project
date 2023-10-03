@@ -6,16 +6,16 @@ import { Button, Card, Container, Form, Nav, Navbar, Modal } from 'react-bootstr
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
    
-const PaymentPage = (props) => {
+const PaymentPage = () => {
     const [data, setData] = useState([]);
-    const { id } = useParams()
+    const { license } = useParams()
 
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
     const fetchTransaction = () => {
-        axios.get(`http://localhost:3001/transactions/id/${id}`)
+        axios.get(`http://localhost:3001/transactions/payment/${license}`)
         .then((res) => {
             setData(res.data)
             console.log(res.data)
@@ -70,21 +70,15 @@ const PaymentPage = (props) => {
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                 >
-                    <Nav.Link href="\home">Home</Nav.Link>
-                    <Nav.Link href="\payment">Payment</Nav.Link>
-                    <Nav.Link href='\transaction'> History </Nav.Link> 
+                    <Nav.Link href={`/home/${license}`}>Home</Nav.Link>
+                    <Nav.Link href={`/payment/${license}`}>Payment</Nav.Link>
+                    <Nav.Link href={`/transaction/${license}`}> History </Nav.Link> 
                 </Nav>
 
                 <Form className="d-flex">
-                <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                />
-                <Button variant="outline-success">
-                    Search 
-                </Button>
+                    <Button variant="danger" href="\">
+                        Log out
+                    </Button>
                 </Form>
                 </Navbar.Collapse>
             </Container>
@@ -92,7 +86,7 @@ const PaymentPage = (props) => {
 
         <div className='first-page'>     
             <div className='mt-5'>             
-                {Object.values(data).slice(0,1).map((car) => {
+                {Object.values(data).slice(0,1).map(() => {
                     return (
                         <Card className='text-center'>
                         <Card.Header>
@@ -152,13 +146,15 @@ const PaymentPage = (props) => {
                                 ปิด
                             </Button>
                             {Object.values(data).slice(0,1).map(() => (
-                                <Button 
-                                variant="primary" 
-                                type='submit' 
-                                onClick={handleSubmit} 
-                                href={`/home/${data.car_license}`}>
-                                    ยืนยัน
-                                </Button>
+                                <Link href={`/home/${data.car_license}`}>
+                                    <Button 
+                                    variant="primary" 
+                                    type='submit' 
+                                    onClick={handleSubmit} 
+                                    >
+                                        ยืนยัน
+                                    </Button>
+                                </Link>                                
                             ))}
                             
                             </Modal.Footer>
@@ -166,14 +162,6 @@ const PaymentPage = (props) => {
                     </div>   
                 </Form>
                 </div>
-            </div>
-
-            <div className='mt-3 mb-3 text-right'>
-            <Link>
-                <Button variant="outline-danger">
-                    กลับ
-                </Button>
-            </Link>
             </div>
 
         </div>

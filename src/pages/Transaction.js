@@ -34,16 +34,15 @@ const Transaction = () => {
                 <Nav
                     className="me-auto my-2 my-lg-0"
                     style={{ maxHeight: '100px' }}
-                    navbarScroll
-                >
-                    <Nav.Link href="\home">Home</Nav.Link>
-                    <Nav.Link href="\payment">Payment</Nav.Link>
-                    <Nav.Link href='\transaction'> History </Nav.Link> 
+                    navbarScroll>
+                    <Nav.Link href={`/home/${license}`}>Home</Nav.Link>
+                    <Nav.Link href={`/payment/${license}`}>Payment</Nav.Link>
+                    <Nav.Link href={`/transaction/${license}`}> History </Nav.Link> 
                 </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
-        
+
         <div className="first-page">
         <div className='mt-5'>
             {Object.values(history).slice(0,1).map((car) => ( 
@@ -76,7 +75,7 @@ const Transaction = () => {
                         <td>{transaction.gate_nameIn}</td>
                         <td>{new Date(transaction.time_in).toLocaleTimeString()}</td>
                         <td>{transaction.gate_nameOut}</td>
-                        <td>{new Date(transaction.time_out).toLocaleTimeString()}</td>
+                        <td>{new Date(transaction.time_out).toLocaleString()}</td>
                         <td>{transaction.time_total}</td>
                         {Object.values(transaction.payments).map((payment) => (
                             <td> {payment.payment_total} </td>
@@ -84,17 +83,17 @@ const Transaction = () => {
                     </tr>)      
                 })}
             </tbody>
-        </Table>
-                
+        </Table>  
         </div>
+
             <div className="mt-3">
             {Object.values(history).slice(0,1).map((transaction) => ( 
                 <Link to={`/home/${transaction.car_license}`}>
                     <Button variant="outline-danger"> กลับ </Button> 
                 </Link>         
             ))}
-            
             </div>
+
         </div>
         </>
     )
