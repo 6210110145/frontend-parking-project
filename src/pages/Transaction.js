@@ -43,6 +43,7 @@ const Transaction = () => {
                 </Navbar.Collapse>
             </Container>
         </Navbar>
+        
         <div className="first-page">
         <div className='mt-5'>
             {Object.values(history).slice(0,1).map((car) => ( 
@@ -87,10 +88,10 @@ const Transaction = () => {
                 
         </div>
             <div className="mt-3">
-            {Object.values(history).slice(0,1).map((car) => ( 
-            <Link to={`/home`}>
-                <Button variant="danger"> กลับ </Button> 
-            </Link>         
+            {Object.values(history).slice(0,1).map((transaction) => ( 
+                <Link to={`/home/${transaction.car_license}`}>
+                    <Button variant="outline-danger"> กลับ </Button> 
+                </Link>         
             ))}
             
             </div>

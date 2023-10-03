@@ -4,6 +4,13 @@
     justify-content: center;
 }
 
+.login-page {
+    height: 10vh;
+    width: 50vh;
+    display: flex;
+    justify-content: center;
+}
+
 .label {
     width: 80%;
     text-transform: uppercase;

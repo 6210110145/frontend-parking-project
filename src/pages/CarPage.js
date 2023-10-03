@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import { Button, Card, Container, Form, ListGroup, Nav, Navbar, Table } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function CarPage() {
   const [payments, setPayments] = useState([])
   const [transactions, setTransactions] = useState([])
-  const [license, setLicense] = useState("")
-  //const {license} = useParams()
+  //const [license, setLicense] = useState("")
+  const {license} = useParams()
 
   const fetchPayment = () => {
     axios.get(`http://localhost:3001/payments/${license}`)
@@ -33,6 +34,11 @@ function CarPage() {
       });
   }
 
+  useEffect(() => {
+    fetchPayment();
+    fetchTransaction();
+  }, [])
+
   return (
     <>
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -45,10 +51,16 @@ function CarPage() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="\home">Home</Nav.Link>
+            <Nav.Link href={`/home/${transactions.car_license}`}>Home</Nav.Link>
             <Nav.Link href={`/payment/${transactions.transaction_id}`}>Payment</Nav.Link>
             <Nav.Link href={`/transaction/${transactions.car_license}`}> History </Nav.Link>
           </Nav>
+
+          <Form className="d-flex">
+            <Button variant="danger" href="\">
+              Log out
+            </Button>
+          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -56,21 +68,16 @@ function CarPage() {
     <div className='first-page'>
       <div class='mt-3 text-center'>
         <Form className="d-flex mt-3 mb-3 ">
-            <input 
-              type='text'
-              placeholder='license'
-              className="me-2"
-              onChange={e => setLicense(e.target.value)}
-            />
-            <Button 
-              variant="success" 
-              onClick={() => {
-                fetchPayment();
-                fetchTransaction();}}
-            >
-              Search 
-            </Button>
-          </Form>
+          <Button 
+            variant="success" 
+            onClick={() => {
+              fetchPayment();
+              fetchTransaction();}}
+          >
+            Update
+          </Button>
+        </Form>
+        
         <Table striped bordered hover>
           <thead>
             <tr>

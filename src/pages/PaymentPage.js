@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Card, Container, Form, Nav, Navbar, Modal } from 'react-bootstrap';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
    
 const PaymentPage = (props) => {
     const [data, setData] = useState([]);
@@ -90,7 +90,7 @@ const PaymentPage = (props) => {
             </Container>
         </Navbar>
 
-        <div className='first-page'>
+        <div className='first-page'>     
             <div className='mt-5'>             
                 {Object.values(data).slice(0,1).map((car) => {
                     return (
@@ -109,7 +109,7 @@ const PaymentPage = (props) => {
                         </Card.Body>
                         </Card>
                     )   
-                })}
+                })}               
                 
                 <div className='jumbotron mt-3'>
                 <Form onSubmit={handleSubmit} className='mt-3'>
@@ -151,15 +151,31 @@ const PaymentPage = (props) => {
                             <Button variant="secondary" onClick={handleClose}>
                                 ปิด
                             </Button>
-                            <Button variant="primary" type='submit' onClick={handleSubmit}>
-                                ยืนยัน
-                            </Button>
+                            {Object.values(data).slice(0,1).map(() => (
+                                <Button 
+                                variant="primary" 
+                                type='submit' 
+                                onClick={handleSubmit} 
+                                href={`/home/${data.car_license}`}>
+                                    ยืนยัน
+                                </Button>
+                            ))}
+                            
                             </Modal.Footer>
                         </Modal>
                     </div>   
                 </Form>
                 </div>
             </div>
+
+            <div className='mt-3 mb-3 text-right'>
+            <Link>
+                <Button variant="outline-danger">
+                    กลับ
+                </Button>
+            </Link>
+            </div>
+
         </div>
     </>
     )
